@@ -1,0 +1,36 @@
+name: Reporte HxH
+
+on:
+  schedule:
+    - cron: '5 * * * *'  # Executa todo horário cheio + 30 min (ex: 01:30, 02:30...)
+  workflow_dispatch:      # Permite rodar manualmente pelo GitHub
+
+jobs:
+  atualizar-dados:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install playwright gspread oauth2client pytz
+          playwright install chromium
+
+      - name: 🔐 Adicionar credenciais do Google Sheets (hxh.json)
+        shell: bash
+        run: |
+          echo "$GCP_JSON_BASE64" | base64 -d > hxh.json
+        env:
+          GCP_JSON_BASE64: ${{ secrets.GCP_JSON_BASE64 }}
+
+      - name: ▶️ Executar script Python
+        run: python main.py
