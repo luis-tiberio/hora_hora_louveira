@@ -17,8 +17,8 @@ os.makedirs(download_dir, exist_ok=True)
 def login(page):
     page.goto("https://spx.shopee.com.br/")
     page.wait_for_selector('xpath=//*[@placeholder="Ops ID"]', timeout=15000)
-    page.fill('xpath=//*[@placeholder="Ops ID"]', 'Ops34139')
-    page.fill('xpath=//*[@placeholder="Senha"]', '@Shopee1234')
+    page.fill('xpath=//*[@placeholder="Ops ID"]', 'Ops105579')
+    page.fill('xpath=//*[@placeholder="Senha"]', '@Shopee123')
     page.click('xpath=/html/body/div[1]/div/div[2]/div/div/div[1]/div[3]/form/div/div/button')
 
     page.wait_for_timeout(15000)
@@ -68,7 +68,7 @@ def update_google_sheets(data):
     scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
     creds = ServiceAccountCredentials.from_json_keyfile_name("hxh.json", scope)
     client = gspread.authorize(creds)
-    sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1R1Ywt_8SuT3X154l1dS30NJEP-JZgoWzH-oq4bOJld0/edit?gid=0#gid=0').worksheet("Python")
+    sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1jalr3aWw6HE2sBmDrAYVXL2eM5sjm9pBu6fP5xM6YUk/edit?gid=0#gid=0').worksheet("Base")
 
     current_time = datetime.datetime.now(timezone)
     if 7 <= current_time.hour <= 23:
